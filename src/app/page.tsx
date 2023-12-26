@@ -17,23 +17,7 @@ const Home = () => {
   };
 
   const handleSubmit = async () => {
-    // Define the URL
-    const url = `/api/auth?id_card_number=${cardNum}`;
-  
-    // Fetch data from the API
-    const response = await fetch(url);
-  
-    // Check if the request was successful
-    if(response.ok) {
-      // Parse the response to JSON
-      const result = await response.json();
-  
-      // Handle the data as needed
-      console.log(result);
-      setData(result);
-    } else {
-      console.error(`Error: ${response.status}`);
-    }
+    
   };
   
   
