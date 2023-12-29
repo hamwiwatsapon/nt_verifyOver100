@@ -17,7 +17,8 @@ const Customer = () => {
   const [isVerify, setIsVerify] = useState(false);
   const [otpInput, setInputOtp] = useState("");
   const [otpData, setOtpData] = useState({});
-
+  const [customerData, setCustomerData] = useState([]);
+  
   const updateID = (event: { target: { value: SetStateAction<string>; }; }) => {
     setCardNum(event.target.value);
   };
@@ -34,7 +35,8 @@ const Customer = () => {
         setInputOtp(otpArray.join(''));
     }
     console.log(otpInput)
-};
+  };
+
   const otpSend = async () => {
     let formData = new FormData();
     formData.append('msisdn', msisdn);
@@ -48,6 +50,7 @@ const Customer = () => {
       if (data.status === 200) {
         setOtpData(data.otpData);
         setIsGenOtp(true);
+        setCustomerData(data)
         alert("Check your sms to verify otp.")
       } else {
         alert(`Id card number or mobile number is invalid. ${data.status}`);
@@ -76,24 +79,26 @@ const Customer = () => {
   };
 
   return (
-    <NextUIProvider>
-      <main className="flex min-h-screen min-w-screen flex-col items-center justify-center p-24 bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
+<NextUIProvider>
+  <main className="flex min-h-screen min-w-screen flex-col items-center justify-center p-24 bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
+    {isVerify 
+      ? <ResultForm data={customerData} msisdn={msisdn}/>
+      : (
         <div className="z-10 max-w-10xl w-full items-center justify-between font-nt text-sm lg:flex flex-col">
           <NTlogo />
           <h1 className="mb-10 text-3xl font-extrabold text-gray-900 md:text-4xl lg:text-5xl"> ระบบยืนยันตัวตนสำหรับผู้มีเบอร์โทรศัพท์หลายหมายเลข</h1>
           <div className="min-w-screen">
-          {isVerify 
-            ? <ResultForm data={otpData}/>
-            : (
-                isGenOtp
-                ? <OTPForm genRef={otpData.reference} handleInputChange={handleInputOtp} handleSubmit={handleSubmitOTP}/>
-                : <VerifyForm updateID={updateID} updateMsisdn={updateMsisdn} handleSubmit={handleSubmitVer}/>
-            )
-        }
+            {isGenOtp
+              ? <OTPForm genRef={otpData.reference} handleInputChange={handleInputOtp} handleSubmit={handleSubmitOTP}/>
+              : <VerifyForm updateID={updateID} updateMsisdn={updateMsisdn} handleSubmit={handleSubmitVer}/>
+            }
           </div>
         </div>
-      </main>
-    </NextUIProvider>
+      )
+    }
+  </main>
+</NextUIProvider>
+
   )
 }
 
