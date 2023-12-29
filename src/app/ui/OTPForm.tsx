@@ -5,7 +5,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 
 interface Props {
     handleInputChange: (event: ChangeEvent<HTMLInputElement>, index: number) => void;
-    genRef: String;
+    genRef: string;
     handleSubmit: (event: SubmitEvent) => void;
 }
 
@@ -13,7 +13,7 @@ const OTPForm: React.FC<Props> = ({ handleInputChange, genRef, handleSubmit }) =
     noStore();
     return (
         <form onSubmit={handleSubmit}>
-            <div className="w-auto flex flex-col gap-4 justify-center text-center">
+            <div className="w-full flex flex-col gap-4 justify-center text-center">
                 <h2 className="mb-2 text-3xl font-extrabold text-gray-800 md:text-4xl lg:text-5xl">รหัส OTP ref={genRef}</h2>
                 <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
                         <div className="w-16 h-16 mr-2">
@@ -73,6 +73,7 @@ const OTPForm: React.FC<Props> = ({ handleInputChange, genRef, handleSubmit }) =
                         </div>
                 </div>
                 <Button className="text-3xl" color="warning" type="submit" >ยืนยัน</Button>
+                <Button className="text-3xl" color="warning" type="button" onPress={()=>{window.location.reload();}} >ส่ง OTP อีกครั้ง</Button>
             </div>
         </form>
     );
