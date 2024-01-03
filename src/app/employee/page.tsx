@@ -1,7 +1,7 @@
 "use client";
 import NTlogo from "@/app/ui/NTlogo";
 import OTPForm from "@/app/ui/OTPForm";
-import VerifyForm from "@/app/ui/customer/VeriftForm";
+import VerifyForm from "@/app/ui/employee/VeriftForm";
 import ResultForm from "@/app/ui/ResultForm";
 import { NextUIProvider } from "@nextui-org/react";
 import { SetStateAction, useState } from "react";
@@ -50,7 +50,7 @@ const Customer = () => {
       if (data.status === 200) {
         setOtpData(data.otpData);
         setIsGenOtp(true);
-        setCustomerData(data.customerData.customer_search)
+        setCustomerData(data)
         alert("Check your sms to verify otp.")
       } else {
         alert(`Id card number or mobile number is invalid. ${data.status}`);
@@ -81,8 +81,7 @@ const Customer = () => {
   return (
 <NextUIProvider>
   <main className="flex min-h-screen min-w-screen flex-col items-center justify-center p-24 bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
-    <ResultForm data={customerData} msisdn={msisdn}/>
-    {/* {isVerify 
+    {isVerify 
       ? <ResultForm data={customerData} msisdn={msisdn}/>
       : (
         <div className="z-10 max-w-10xl w-full items-center justify-between font-nt text-sm lg:flex flex-col">
@@ -96,7 +95,7 @@ const Customer = () => {
           </div>
         </div>
       )
-    } */}
+    }
   </main>
 </NextUIProvider>
 
