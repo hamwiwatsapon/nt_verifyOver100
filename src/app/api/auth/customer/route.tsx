@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import axios from 'axios';
-import { error } from "console";
 
 export async function POST(req:Request) {
   const formData = await req.formData(); // call the function and await its result
@@ -27,8 +26,8 @@ export async function POST(req:Request) {
 }
 
   try {
-    const url = `https://customerapi.cattelecom.com/dev/customerapi/v200/search/customer?id_card_number=${idCardNumber}&is_active=true&service_types=[150]`
-    const res = await axios.get(url, {headers: {apikey: process.env.DEV_API_KEY}})
+    const url = `https://customerapi.cattelecom.com/app/customerapi/v200/search/customer?id_card_number=${idCardNumber}&is_active=true`
+    const res = await axios.get(url, {headers: {apikey: process.env.PROD_API_KEY}})
     const resData = res.data
     const jsonFormData = JSON.stringify(resData)
     const OTP = genarateOTP();

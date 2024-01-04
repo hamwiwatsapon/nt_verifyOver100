@@ -20,6 +20,14 @@ const config: Config = {
       },
     },
   },
+  spacing: {
+    width: {
+      'a4': "210mm",
+    },
+    height: {
+      'a4': "297mm"
+    }
+  },
   darkMode: "class",
   plugins: [nextui()],
 }

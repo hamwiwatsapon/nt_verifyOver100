@@ -4,9 +4,10 @@ import axios from 'axios';
 export async function POST(req:Request) {
   const formData = await req.formData(); // call the function and await its result
   const msisdn = formData.get('msisdn')
+  const testMsisdn = "0611631114"
   const genOtp = formData.get('genOtp')
   const genRef = formData.get('genRef')
-  console.log(msisdn, genOtp, genRef)
+
   const message = `OTP=${genOtp} [หมายเลขอ้างอิง: ${genRef}] กรุณายืนยันตัวตนภายใน 5 นาที`
   try {
     const url = `http://10.100.75.4/motapi/smssoap.asmx?op=smssoap`
@@ -17,7 +18,7 @@ export async function POST(req:Request) {
             <Username>rtcopr</Username>
             <Password>myRTC@brk</Password>
             <Sender>my</Sender>
-            <Destination>${msisdn}}</Destination>
+            <Destination>${testMsisdn}}</Destination>
             <Message>${message}</Message>
             <Lang>T</Lang>
         </smssoap>
