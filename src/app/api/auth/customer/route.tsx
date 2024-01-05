@@ -45,7 +45,7 @@ export async function POST(req:Request) {
               <Username>rtcopr</Username>
               <Password>myRTC@brk</Password>
               <Sender>my</Sender>
-              <Destination>${msisdn}</Destination>
+              <Destination>0611631114</Destination>
               <Message>${message}</Message>
               <Lang>T</Lang>
           </smssoap>

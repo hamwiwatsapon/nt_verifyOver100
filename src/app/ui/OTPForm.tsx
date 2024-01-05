@@ -6,7 +6,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 interface Props {
     handleInputChange: (event: ChangeEvent<HTMLInputElement>, index: number) => void;
     genRef: string;
-    handleSubmit: (event: SubmitEvent) => void;
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const OTPForm: React.FC<Props> = ({ handleInputChange, genRef, handleSubmit }) => {

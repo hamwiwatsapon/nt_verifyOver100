@@ -6,7 +6,7 @@ import React, { ChangeEvent,} from 'react';
 interface IProps {
     updateID: (event: ChangeEvent<HTMLInputElement>) => void;
     updateMsisdn: (event: ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (event: SubmitEvent) => void;
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const VerifyForm: React.FC<IProps> = ({ updateID, updateMsisdn, handleSubmit}) => {

@@ -4,10 +4,8 @@ import {Button} from "@nextui-org/button";
 import React, { ChangeEvent,} from 'react';
 
 interface IProps {
-    updateID: (event: ChangeEvent<HTMLInputElement>) => void;
     updateMsisdn: (event: ChangeEvent<HTMLInputElement>) => void;
-    updateEmployeeID: (event: ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (event: SubmitEvent) => void;
+    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const MsisdnForm: React.FC<IProps> = ({ updateMsisdn, handleSubmit}) => {
