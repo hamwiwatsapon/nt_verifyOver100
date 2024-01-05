@@ -70,7 +70,7 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
     
     const tableOther = () => {
         const tableAdd = addTable.map((item, index) => {
-            let itemStr = typeof item === 'symbol' ? item.toString() : item;
+            let itemStr = typeof item === 'symbol' ? (item as Symbol).toString() : item;;
             return (
                 <TableRow key={index}>
                     <TableCell className="flex flex-row justify-between content-center items-center">
@@ -136,7 +136,7 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
                                 <TableColumn>เบอร์ที่ถือครองอื่นๆ</TableColumn>
                             </TableHeader>
                             <TableBody>
-                                {tableOther()}
+                                <>{tableOther()}</>
                                 <TableRow key={100} >
                                     <TableCell className="flex flex-row justify-between content-center items-center print:hidden">
                                         <Input size="sm" id="other_input"  maxLength={10} type="text" onChange={handleInputChange}/>
