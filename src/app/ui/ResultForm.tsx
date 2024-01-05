@@ -178,24 +178,21 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
                             </TableBody>
                     </Table>
                 </div>
-                <div className="flex flex-row text-center justify-center relative row-start-4 col-span-full">
-                    <div className="text-center text-md m-10">
-                        <p className="mb-4">สำหรับพนักงาน</p>
-                        <p>................................................</p>
-                        <p>(..............................................)</p>
-                    </div>
-                    <div className="text-center text-md m-10">
-                        <p className="mb-4">ลงชื่อ</p>
-                        <p>................................................</p>
-                        <p>{customerName}</p>
-                    </div>
-                    <div className="text-center text-md m-10">
-                        <p className="mb-4">ลงชื่อ</p>
-                        <p>................................................</p>
-                        <p>{customerName}</p>
-                    </div>
+                <div className="row-start-4 text-center text-md m-10">
+                    <p className="mb-4">สำหรับพนักงาน</p>
+                    <p>................................................</p>
+                    <p>(..............................................)</p>
                 </div>
-                <div  className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></div>
+                <div className="row-start-4 text-center text-md m-10">
+                    <p className="mb-4">ลงชื่อ</p>
+                    <p>................................................</p>
+                    <p>{customerName}</p>
+                </div>
+                <div className="row-start-4 text-center text-md m-10">
+                    <p className="mb-4">ลงชื่อ</p>
+                    <p>................................................</p>
+                    <p>{customerName}</p>
+                </div>
                 <div className="flex flex-col row-start-5 col-span-full m-10 p-5 text-center w-full print:block print:break-before-page">
                     <div>
                         <h3 className="m-20">

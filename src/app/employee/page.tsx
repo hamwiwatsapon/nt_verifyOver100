@@ -4,6 +4,7 @@ import OTPForm from "@/app/ui/OTPForm";
 import VerifyForm from "@/app/ui/employee/VeriftForm";
 import MsisdnForm from "@/app/ui/employee/MsisdnForm";
 import ResultForm from "@/app/ui/ResultForm";
+import { Link } from "@nextui-org/react";
 import { NextUIProvider } from "@nextui-org/react";
 import { SetStateAction, useState } from "react";
 import { unstable_noStore as noStore } from 'next/cache';
@@ -103,6 +104,11 @@ const Customer = () => {
 
   return (
 <NextUIProvider>
+  <div class="fixed top-20 right-20">
+      <Link size="lg" isBlock href="/" color="foreground">
+      <svg class="h-8 w-8 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg> กลับหน้าหลัก 
+      </Link>
+  </div>
   {isVerify 
       ? <main className="flex min-h-screen min-w-screen">
           <ResultForm data={customerData} msisdn={msisdn}/>

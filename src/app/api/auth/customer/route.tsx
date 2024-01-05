@@ -5,7 +5,11 @@ export async function POST(req:Request) {
   const formData = await req.formData(); // call the function and await its result
   const idCardNumber = formData.get('idCardNumber'); // get id_card_number from form data
   const msisdn = formData.get('msisdn')
-  const msisdn_cut = (msisdn.toString()).replace(/^0+/, '');
+  let msisdn_cut = '';
+  if (msisdn !== null) {
+    msisdn_cut = msisdn.toString().replace(/^0+/, '');
+  }
+
   function genarateOTP() {
     let reference = '';
     let otp = '';
@@ -41,7 +45,7 @@ export async function POST(req:Request) {
               <Username>rtcopr</Username>
               <Password>myRTC@brk</Password>
               <Sender>my</Sender>
-              <Destination>0611631114</Destination>
+              <Destination>${msisdn}</Destination>
               <Message>${message}</Message>
               <Lang>T</Lang>
           </smssoap>
