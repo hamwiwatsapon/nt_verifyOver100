@@ -1,0 +1,13 @@
+"use strict";(()=>{var e={};e.id=554,e.ids=[554],e.modules={517:e=>{e.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},9491:e=>{e.exports=require("assert")},2361:e=>{e.exports=require("events")},7147:e=>{e.exports=require("fs")},3685:e=>{e.exports=require("http")},5687:e=>{e.exports=require("https")},2037:e=>{e.exports=require("os")},1017:e=>{e.exports=require("path")},2781:e=>{e.exports=require("stream")},6224:e=>{e.exports=require("tty")},7310:e=>{e.exports=require("url")},3837:e=>{e.exports=require("util")},9796:e=>{e.exports=require("zlib")},3522:(e,s,t)=>{t.r(s),t.d(s,{headerHooks:()=>c,originalPathname:()=>g,patchFetch:()=>v,requestAsyncStorage:()=>d,routeModule:()=>m,serverHooks:()=>x,staticGenerationAsyncStorage:()=>l,staticGenerationBailout:()=>h});var r={};t.r(r),t.d(r,{POST:()=>u});var o=t(5419),a=t(9108),n=t(9678),p=t(8070),i=t(3567);async function u(e){let s=await e.formData();s.get("msisdn");let t=s.get("genOtp"),r=s.get("genRef"),o=`OTP=${t} [หมายเลขอ้างอิง: ${r}] กรุณายืนยันตัวตนภายใน 5 นาที`;try{let e=`<?xml version="1.0" encoding="utf-8"?>
+    <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <smssoap xmlns="http://microsoft.com/webservices/">
+            <Username>rtcopr</Username>
+            <Password>myRTC@brk</Password>
+            <Sender>my</Sender>
+            <Destination>0611631114}</Destination>
+            <Message>${o}</Message>
+            <Lang>T</Lang>
+        </smssoap>
+        </soap:Body>
+    </soap:Envelope>`,s=await i.Z.post("http://10.100.75.4/motapi/smssoap.asmx?op=smssoap",e,{headers:{"Content-Type":"text/xml; charset: utf-8"}});if(200===s.status)return p.Z.json({status:200});return p.Z.json({status:401})}catch(e){return console.error(e),p.Z.json({status:500,message:"Internal server error",error:e.message})}}let m=new o.AppRouteRouteModule({definition:{kind:a.x.APP_ROUTE,page:"/api/sendSms/route",pathname:"/api/sendSms",filename:"route",bundlePath:"app/api/sendSms/route"},resolvedPagePath:"D:\\Billone\\NT\\nt_verifyOver100\\src\\app\\api\\sendSms\\route.tsx",nextConfigOutput:"",userland:r}),{requestAsyncStorage:d,staticGenerationAsyncStorage:l,serverHooks:x,headerHooks:c,staticGenerationBailout:h}=m,g="/api/sendSms/route";function v(){return(0,n.patchFetch)({serverHooks:x,staticGenerationAsyncStorage:l})}}};var s=require("../../../webpack-runtime.js");s.C(e);var t=e=>s(s.s=e),r=s.X(0,[638,721],()=>t(3522));module.exports=r})();
