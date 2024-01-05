@@ -69,23 +69,24 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
     };
     
     const tableOther = () => {
-        return (
-                addTable && addTable.map((item, index) => (
-                    <TableRow key={item}>
-                        <TableCell className="flex flex-row justify-between content-center items-center">
-                            {item.toString()}
-                            <Button className="print:hidden" isIconOnly color="danger" onPress={() => handleDecreaseButton(index)}>
-                                -
-                            </Button>
-                        </TableCell>
-                    </TableRow>
-                ))
-        );
-    }
-    
+        const tableAdd = addTable.map((item, index) => {
+            let itemStr = typeof item === 'symbol' ? item.toString() : item;
+            return (
+                <TableRow key={index}>
+                    <TableCell className="flex flex-row justify-between content-center items-center">
+                        {itemStr}
+                        <Button className="print:hidden" isIconOnly color="danger" onPress={() => handleDecreaseButton(index)}>
+                            -
+                        </Button>
+                    </TableCell>
+                </TableRow>
+            );
+        });
+        return tableAdd;
+    };
 
     return (
-            <div className="grid grid-cols-3 gap-2 w-full sticky top-0 bg-white p-5 w-a4 h-a4 text-black print:text-sm print:w-a4 print:h-a4">
+            <div className="grid grid-cols-3 gap-2 w-full sticky top-10 bg-white p-5 w-a4 h-a4 text-black print:text-sm print:w-a4 print:h-a4">
                 <div className="row-start-1 col-span-3 w-full bg-white text-black text-xl text-center rounded-md justify-center flex flex-row">
                     <div className="mr-5">
                         <h2>ข้อมูลผู้ใช้บริการ: {customerName}</h2>
@@ -159,11 +160,11 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
                             </TableHeader>
                             <TableBody>
                                 {rowsData && rowsData
-                                .filter(row => row.checked === true || row.service_type_name === "my Prepaid" || row.service_type_name === "my" || row.service_type_name === "my Postpaid")
+                                .filter(row => row.checked === true && row.service_type_name === "my Prepaid" || row.service_type_name === "my" || row.service_type_name === "my Postpaid")
                                 .map((row, index) => (
                                     <TableRow key={row.subscriber_number}>
                                         <TableCell>
-                                            <Checkbox size="sm" onChange={handleCheckbox} value={row.subscriber_number}>0{row.subscriber_number}</Checkbox>
+                                            0{row.subscriber_number}
                                         </TableCell>
                                     </TableRow>
                                 ))
@@ -183,11 +184,11 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
                             </TableHeader>
                             <TableBody>
                             {rowsData && rowsData
-                                .filter(row => row.checked === false || row.service_type_name === "my Prepaid" || row.service_type_name === "my" || row.service_type_name === "my Postpaid")
+                                .filter(row => row.checked === false && row.service_type_name === "my Prepaid" || row.service_type_name === "my" || row.service_type_name === "my Postpaid")
                                 .map((row, index) => (
                                     <TableRow key={row.subscriber_number}>
                                         <TableCell>
-                                            <Checkbox size="sm" onChange={handleCheckbox} value={row.subscriber_number}>0{row.subscriber_number}</Checkbox>
+                                            0{row.subscriber_number}
                                         </TableCell>
                                     </TableRow>
                                 ))
@@ -195,22 +196,19 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
                             </TableBody>
                     </Table>
                 </div>
-                <div className="row-start-4 text-center text-md m-10">
-                    <p className="mb-4">สำหรับพนักงาน</p>
-                    <p>................................................</p>
-                    <p>(..............................................)</p>
+                <div className="row-start-4 col-span-full flex flex-row justify-center">
+                    <div className="text-center text-xl m-10">
+                        <p className="mb-4">ลงชื่อ</p>
+                        <p>................................................</p>
+                        <p>{customerName}</p>
+                    </div>
+                    <div className="text-center text-xl m-10">
+                        <p className="mb-4">สำหรับพนักงาน</p>
+                        <p>................................................</p>
+                        <p>(..............................................)</p>
+                    </div>
                 </div>
-                <div className="row-start-4 text-center text-md m-10">
-                    <p className="mb-4">ลงชื่อ</p>
-                    <p>................................................</p>
-                    <p>{customerName}</p>
-                </div>
-                <div className="row-start-4 text-center text-md m-10">
-                    <p className="mb-4">ลงชื่อ</p>
-                    <p>................................................</p>
-                    <p>{customerName}</p>
-                </div>
-                <div className="flex flex-col row-start-5 col-span-full m-10 p-5 text-center w-full print:block print:break-before-page">
+                <div className="flex flex-col row-start-5 text-xl col-span-full m-10 p-5 text-center w-full print:block print:break-before-page">
                     <div>
                         <h3 className="m-20">
                             หนังสือยืนยันการถือครองเลขหมายโทรศัพท์เคลื่อนที่
