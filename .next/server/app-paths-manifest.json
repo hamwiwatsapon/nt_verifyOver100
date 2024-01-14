@@ -1,11 +1,4 @@
 {
-  "/_not-found": "app/_not-found.js",
-  "/api/auth/customer/route": "app/api/auth/customer/route.js",
-  "/api/msisdn/route": "app/api/msisdn/route.js",
-  "/api/auth/employee/route": "app/api/auth/employee/route.js",
-  "/employee/page": "app/employee/page.js",
-  "/customer/page": "app/customer/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/sendSms/route": "app/api/sendSms/route.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/employee/page": "app/employee/page.js"
 }

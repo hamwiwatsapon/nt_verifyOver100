@@ -22,19 +22,19 @@ interface Customer {
   
 interface IProps {
     data: Customer[];
-    msisdn: string; // replace with the actual type of msisdn
     employee: string;
 }
 
 
   
-const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
+const ResultForm: React.FC<IProps> = ({ data, employee }) => {
     const customerData = data;
     const customerIDCARD = customerData[0].id_card_number;
     const employeeId = employee;
 	
 	// State update on page //
     const [inputAdd, setInputAdd] = useState<string>("");
+    const [isVerify, setIsVerify] = useState(false);
     // End state update on page //
 	
 	const url = `https://rtcapp.mybynt.com/nt_verifyUploadFile/form_upload_file.php?id_card=${customerIDCARD}`
@@ -92,6 +92,7 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
 
     useEffect(() => {
         fetchData();
+        handleCheckFile();
     }, []);
 
 
@@ -145,11 +146,34 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
             
             })
             .then(response => response.json())
-            .then(data => console.log(data))
-            .catch((error) => console.error('Error:', error));
-        swal("ยืนยันข้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลอีกครั้ง", "success")
+            .then(data => {
+                if (data.status === 200) {
+                    swal("ยืนยันข้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลอีกครั้ง", "success")
+                } else {
+                    swal("การยืนยันข้อมูลมีความผิดคลาด","กรุณารอการตรวจสอบ", "error")
+                }
+            })
+            .catch((error) => {
+                swal("การยืนยันข้อมูลมีความผิดคลาด","กรุณารอการตรวจสอบ", "error")
+                console.error('Error:', error)
+            });
     }
 
+    const handleCheckFile = async () => {
+        await fetch('/api/db-query/checkFileUpload', {
+            method: 'POST',
+            body: JSON.stringify({ id_card: customerIDCARD }),
+            
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 200) {
+                    setIsVerify(true)
+                }
+            })
+            .catch((error) => console.error('Error:', error));
+        
+    }
     const handlePrint = async () => {
         window.print();
         await fetch('/api/db-query/employeeInsert', {
@@ -158,9 +182,18 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
             
             })
             .then(response => response.json())
-            .then(data => console.log(data))
-            .catch((error) => console.error('Error:', error));
-        swal("บันทึกข้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลเพื่อความถูกต้อง", "success")
+            .then(data => {
+                if (data.status === 200) {
+                    swal("บันทึกช้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลอีกครั้ง", "success")
+                } else {
+                    swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
+                }
+            })
+            .catch((error) => {
+                swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
+                console.error('Error:', error)
+            });
+        await handleCheckFile();
     };
 	
     return (
@@ -208,7 +241,7 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
                                 <TableColumn>
                                     <div className="justify-between flex flex-row">
                                         <div>
-                                            เบอร์โทรศัพท์ในระบบ (กรุณาเลือกเบอร์ที่ถือครอง)
+                                            เบอร์โทรศัพท์ในระบบทั้งหมด {msisdnTable.filter(row => row.type_select === "owner" || row.type_select === "not_owned").length} เลขหมาย (กรุณาเลือกเบอร์ที่ถือครอง)
                                         </div>
                                         <div>
                                             <Checkbox className="" size="sm" onChange={handleCheckAll}>เลือกทั้งหมด</Checkbox>
@@ -279,12 +312,12 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
                             url={url}
                             />
                         </div>
+                    <div className="mb-5 print:hidden">
+                        <Button className="self-end" fullWidth color="success" onPress={handleVerify} isDisabled={!isVerify}>
+                            ยืนยันข้อมูลถูกต้อง
+                        </Button>
                     </div>
-                </div>
-                <div className="mb-5 print:hidden">
-                    <Button className="self-end" fullWidth color="success" onPress={handleVerify}>
-                        ยืนยันข้อมูลถูกต้อง
-                    </Button>
+                    </div>
                 </div>
                 <div className="grid grid-cols-2 gap-5">
                     <div className="print:hidden">
@@ -299,7 +332,7 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
                                 </TableHeader>
                                 <TableBody>
                                 {msisdnTable && msisdnTable
-                                    .filter((row, index) => (row.type_select === 'owner'))
+                                    .filter((row) => (row.type_select === 'owner'))
                                     .map((row) => (
                                         <TableRow key={row.msisdn}>
                                             <TableCell>
@@ -323,7 +356,7 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
                                 </TableHeader>
                                 <TableBody>
                                 {msisdnTable && msisdnTable
-                                    .filter((row, index) => (row.type_select === 'not_owned'))
+                                    .filter((row) => (row.type_select === 'not_owned'))
                                     .map((row) => (
                                         <TableRow key={row.msisdn}>
                                             <TableCell>
@@ -373,8 +406,8 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn, employee }) => {
                     <h1 className="mt-10 mb-2">หมายเลขที่ยืนยันเป็นเจ้าของ</h1>
                     <div className="grid grid-cols-5">
                         {msisdnTable && msisdnTable
-                        .filter((row, index) => (row.type_select === 'owner'))
-                        .map((row, index) => (
+                        .filter((row) => (row.type_select === 'owner'))
+                        .map((row) => (
                             <div className="mr-5" key={row.msisdn}>{row.msisdn}</div>
                         ))}
                     </div>

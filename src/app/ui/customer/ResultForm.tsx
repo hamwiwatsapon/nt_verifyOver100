@@ -23,12 +23,11 @@ interface Customer {
   
 interface IProps {
     data: Customer[];
-    msisdn: string; // replace with the actual type of msisdn
 }
 
 
   
-const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
+const ResultForm: React.FC<IProps> = ({ data }) => {
     const customerData = data;
     const customerIDCARD = customerData[0].id_card_number;
 	const url = `https://rtcapp.mybynt.com/nt_verifyUploadFile/form_upload_file.php?id_card=${customerIDCARD}`
@@ -205,7 +204,7 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
                                 <TableColumn>
                                     <div className="justify-between flex flex-row">
                                         <div>
-                                            เบอร์โทรศัพท์ในระบบ (กรุณาเลือกเบอร์ที่ถือครอง)
+                                        เบอร์โทรศัพท์ในระบบทั้งหมด {msisdnTable.filter(row => row.type_select === "owner" || row.type_select === "not_owned").length} เลขหมาย (กรุณาเลือกเบอร์ที่ถือครอง)
                                         </div>
                                         <div>
                                             <Checkbox className="" size="sm" onChange={handleCheckAll}>เลือกทั้งหมด</Checkbox>
@@ -263,17 +262,6 @@ const ResultForm: React.FC<IProps> = ({ data, msisdn }) => {
                             </tbody>
                         </table>
                         <div className="text-red-500">*** กรณีสำหรับเบอร์ที่ถือครองอื่นๆ กรุณานำ SIM CARD ตัวจริงมายืนยันตัวตนที่ศูนย์บริการ NT</div>
-                        <div className="">
-                            <Iframe className='w-full' 
-                                width="200px" 
-                                height="325px"
-                                id=""
-                                scrolling="auto"
-                                display="block"
-                                position="relative"
-                                url={url}
-                                />
-                        </div>
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-5">

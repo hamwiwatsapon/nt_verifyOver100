@@ -109,7 +109,7 @@ const Customer = () => {
   <NextUIProvider>
       {isVerify 
         ? <main className="flex min-h-screen min-w-screen bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
-          <ResultForm data={customerData} msisdn={msisdn}/>
+          <ResultForm data={customerData}/>
           </main>
         : (
           <main className="flex min-h-screen min-w-screen flex-col items-center justify-center p-24 bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">

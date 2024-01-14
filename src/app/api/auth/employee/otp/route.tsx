@@ -40,7 +40,7 @@ export async function POST(req:Request) {
     const time = new Date();
     const formattedTime = time.toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
 
-    const url_2 = `https://customerapi.cattelecom.com/app/customerapi/v200/search/customer?id_card_number=${idCardNumber}&is_active=true`
+    const url_2 = `https://customerapi.cattelecom.com/app/customerapi/v200/search/customer/fetch?id_card_number=${idCardNumber}&is_active=true`
     const res_2 = await axios.get(url_2, {headers: {apikey: process.env.PROD_API_KEY}});
     const res2Data = res_2.data
     
@@ -65,7 +65,7 @@ export async function POST(req:Request) {
         if (res.status === 200) {
           const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|SUCCESS\n`
           fs.appendFile('./log/login.log', log, () => {});
-          //console.log(OTP)
+          // console.log(OTP)
           return NextResponse.json({ status: 200, otpData: OTP, customerData: res2Data});
         } 
         const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|INVALID\n`

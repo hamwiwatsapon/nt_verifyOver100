@@ -31,7 +31,7 @@ export async function POST(req:Request) {
   }
 
   try {
-    const url = `https://customerapi.cattelecom.com/app/customerapi/v200/search/customer?id_card_number=${idCardNumber}&is_active=true`
+    const url = `https://customerapi.cattelecom.com/app/customerapi/v200/search/customer/fetch?id_card_number=${idCardNumber}&is_active=true`
     const res = await axios.get(url, {headers: {apikey: process.env.PROD_API_KEY}})
     const resData = res.data
     const jsonFormData = JSON.stringify(resData)
@@ -60,7 +60,7 @@ export async function POST(req:Request) {
       const res = await axios.post(url, body,{headers: {"Content-Type": "text/xml; charset: utf-8"}})
       if (res.status === 200) {
         fs.appendFile('./log/login.log', log, () => {});
-        //console.log(OTP)
+        // console.log(OTP)
         return NextResponse.json({ status: 200, otpData: OTP, customerData: resData});
       } 
       return NextResponse.json({ status: 401 });
