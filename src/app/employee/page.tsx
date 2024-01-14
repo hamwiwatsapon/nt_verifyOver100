@@ -3,14 +3,11 @@ import NTlogo from "@/app/ui/NTlogo";
 import OTPForm from "@/app/ui/OTPForm";
 import VerifyForm from "@/app/ui/employee/VeriftForm";
 import MsisdnForm from "@/app/ui/employee/MsisdnForm";
-import ResultForm from "@/app/ui/ResultForm";
-import { Link } from "@nextui-org/react";
-import { NextUIProvider } from "@nextui-org/react";
-import { SetStateAction, useState } from "react";
+import ResultForm from "@/app/ui/employee/ResultForm";
+import { Link, NextUIProvider } from "@nextui-org/react";
+import React, { SetStateAction, useState, ChangeEvent } from "react";
 import { unstable_noStore as noStore } from 'next/cache';
-import { useRouter } from 'next/navigation';
-import React, { ChangeEvent } from "react";
-
+import swal from 'sweetalert'
 const Customer = () => {
   noStore();
 
@@ -38,13 +35,12 @@ const Customer = () => {
     ref_subscr_no:string;
   }
 
-  const router = useRouter();
   const [msisdn, setMsisdn] = useState("");
   const [employeeId, setEmployeeId] = useState("");
   const [isGenOtp, setIsGenOtp] = useState(false);
   const [isVerify, setIsVerify] = useState(false);
   const [isEmployee, setIsEmployee] = useState(false);
-  const [otpInput, setInputOtp] = useState("");
+  const [otpInput, setOtpInput] = useState("");
   const [otpData, setOtpData] = React.useState<OTPData | null>(null);
   const [customerData, setCustomerData] = useState<Customer[]>([]);
   
@@ -58,10 +54,15 @@ const Customer = () => {
 
   const handleInputOtp = (event: ChangeEvent<HTMLInputElement>, index: number) => {
     const value = event.target.value;
-    if (/^[0-9]$/.test(value)) { // checks if the input is a single digit number
+    if (/^\d$/.test(value)) { // checks if the input is a single digit number
         let otpArray = otpInput.split('');
         otpArray[index] = value;
-        setInputOtp(otpArray.join(''));
+        setOtpInput(otpArray.join(''));
+		let nextInput = document.getElementById(`otp${index+2}`)! as HTMLInputElement;
+		if (nextInput) {
+			  nextInput.value = "";
+			  nextInput.focus();
+		}
     }
   };
 
@@ -76,6 +77,9 @@ const Customer = () => {
     .then(data => {
         if (data.status===200) {
           setIsEmployee(true);
+          swal("เข้าสู่ระบบสำเร็จ", "", "success")
+        } else {
+          swal("หมายเลขประจำตัวพนักงานไม่ถูกต้อง", "", "error");
         }
       })
     .catch((error) => {
@@ -86,7 +90,8 @@ const Customer = () => {
   const otpSend = async () => {
     let formData = new FormData();
     formData.append('msisdn', msisdn);
-    await fetch('/api/msisdn', {
+    formData.append('EmployeeId', employeeId);
+    await fetch('/api/auth/employee/otp', {
       method: 'POST',
       body: formData,
     })
@@ -96,10 +101,9 @@ const Customer = () => {
         setOtpData(data.otpData);
         setIsGenOtp(true);
         setCustomerData(data.customerData.customer_search || [])
-        console.log(data.customerData.customer_search)
-        alert(`Check your sms to verify otp.`)
+        swal("ส่ง OTP สำเร็จ", "กรุณาตรวจสอบหมายเลข OTP ในกล่องข้อความตามหมายเลขโทรศัพท์", "success")
       } else {
-        alert(`Id card number or mobile number is invalid. ${data.status}`);
+        swal("หมายเลขโทรศัพท์ไม่ถูกต้อง", "", "error");
       }
     })
     .catch((error) => {
@@ -122,34 +126,30 @@ const Customer = () => {
     if (otpData !== null &&  otpInput === otpData.otp && ((Date.now() - otpData.timestamp)/ 60000) < 5) {
       setIsVerify(true)
     } else if (otpData !== null && ((Date.now() - otpData.timestamp)/ 60000) > 5) {
-      alert("รหัส OTP หมดอายุกรุณาคลิกส่ง OTP อีกครั้ง")
+      swal("รหัส OTP หมดอายุ", "กรุณาคลิกส่ง OTP อีกครั้ง", "warning")
     } else {
-      alert("รหัส OTP ไม่ถูกต้อง")
+      swal("รหัส OTP ไม่ถูกต้อง", "", "error")
     }
   };
-
+  
   return (
 <NextUIProvider>
-  <div className="fixed top-20 right-20">
-      <Link size="lg" isBlock href="/" color="foreground">
-      <svg className="h-8 w-8 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="5 12 3 12 12 3 21 12 19 12" />  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg> กลับหน้าหลัก 
-      </Link>
-  </div>
   {isVerify 
       ? <main className="flex min-h-screen min-w-screen">
-          <ResultForm data={customerData} msisdn={msisdn}/>
+          <ResultForm data={customerData} msisdn={msisdn} employee={employeeId}/>
         </main>
       : (
         <main className="flex min-h-screen min-w-screen flex-col items-center justify-center p-24 bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
           <div className="z-10 max-w-10xl w-full items-center justify-between font-nt text-sm lg:flex flex-col">
             <NTlogo />
-            <h1 className="mb-10 text-3xl font-extrabold text-gray-900 md:text-4xl lg:text-5xl"> ระบบยืนยันตัวตนสำหรับผู้มีเบอร์โทรศัพท์หลายหมายเลข</h1>
+            <h1 className="mb-10 text-3xl font-extrabold text-gray-900 md:text-4xl lg:text-5xl">ระบบตรวจสอบการถือครองหมายเลขโทรศัพท์</h1>
             <div className="items-center">
-              {isGenOtp
-                ? otpData && <OTPForm genRef={otpData.reference} handleInputChange={handleInputOtp} handleSubmit={handleSubmitOTP}/>
-                : isEmployee
-                  ? <MsisdnForm updateMsisdn={updateMsisdn}  handleSubmit={handleSubmitMsisdn} />
-                  : <VerifyForm updateEmployeeID={updateEmployeeID} handleSubmit={handleSubmitVer} />
+              {isGenOtp ?
+                  otpData && <OTPForm genRef={otpData.reference} handleInputChange={handleInputOtp} handleSubmit={handleSubmitOTP}/>
+                : isEmployee ? 
+                    <MsisdnForm updateMsisdn={updateMsisdn}  handleSubmit={handleSubmitMsisdn} />
+                    : 
+                    <VerifyForm updateEmployeeID={updateEmployeeID} handleSubmit={handleSubmitVer} />
               }
             </div>
           </div>
