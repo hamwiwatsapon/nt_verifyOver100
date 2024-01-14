@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+/.next
 # debug
 npm-debug.log*
 yarn-debug.log*
