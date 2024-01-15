@@ -8,7 +8,7 @@ export async function POST(req:Request) {
 
   let msisdn_cut = '';
   if (msisdn !== null) {
-    msisdn_cut = msisdn.toString().replace(/^0+/, '');
+    msisdn_cut = msisdn?.toString().replace(/^0+/, '');
   }
 
   function genarateOTP() {

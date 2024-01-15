@@ -9,7 +9,7 @@ export async function POST(req:Request) {
   let msisdn_cut = '';
 
   if (msisdn !== null) {
-    msisdn_cut = msisdn.toString().replace(/^0+/, '');
+    msisdn_cut = msisdn?.toString().replace(/^0+/, '');
   }
 
   function genarateOTP() {
@@ -72,9 +72,6 @@ export async function POST(req:Request) {
         fs.appendFile('./log/login.log', log, () => {});
         return NextResponse.json({ status: 401 });
       }
-      const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|INVALID\n`
-      fs.appendFile('./log/login.log', log, () => {});
-      return NextResponse.json({ status: 401 })
   } catch (err) {
     const time = new Date();
     const formattedTime = time.toLocaleString().replace(/T/, ' ').replace(/\..+/, '');

@@ -1,5 +1,6 @@
 import mysql2 from 'mysql2/promise';
 import { NextResponse } from "next/server";
+import fs from 'fs';
 
 export async function POST(req:Request) {
   const data = await req.json();
@@ -73,21 +74,17 @@ export async function POST(req:Request) {
         WHERE id_card = '${customerData?.id_card}'`
         await db.execute(update)
 
-		for (let row of msisdnData) {
-          if (row.type_select === "delete") {
-            let updateMsisdn = `DELETE FROM vf_msisdn_in_report WHERE id_card = '${row.id_card}' AND msisdn = '${row.msisdn}'`;
-            await db.execute(updateMsisdn)
-          } else if (row.type_select === "other") {
-            let updateMsisdn = `INSERT INTO vf_msisdn_in_report (id_card, msisdn, type_select) VALUES ('${row.id_card}', '${row.msisdn}', '${row.type_select}')`;
-            await db.execute(updateMsisdn);
-          } else {
-            let updateMsisdn = `UPDATE vf_msisdn_in_report SET type_select = '${row.type_select}' WHERE id_card = '${row.id_card}' AND msisdn = '${row.msisdn}'`;
-            await db.execute(updateMsisdn);
-          }
+        for (let row of msisdnData) {
+          let updateMsisdn = `UPDATE vf_msisdn_in_report SET type_select = '${row.type_select}' WHERE id_card = '${row.id_card}' AND msisdn = '${row.msisdn}'`;
+          await db.execute(updateMsisdn);
         }
 
         await db.commit();
         await db.end();
+        const time = new Date();
+        const formattedTime = time.toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
+        const log = `${formattedTime}|${customerData?.id_card}|CUSTOMER\n`
+        fs.appendFile('./log/print.log', log, () => {});
         return NextResponse.json({ status: 200, response:"Update"}); 
       } 
     }

@@ -1,6 +1,4 @@
 {
   "/page": "app/page.js",
-  "/employee/page": "app/employee/page.js",
-  "/api/db-query/employeeInsert/route": "app/api/db-query/employeeInsert/route.js",
-  "/api/db-query/checkFileUpload/route": "app/api/db-query/checkFileUpload/route.js"
+  "/employee/page": "app/employee/page.js"
 }

@@ -11,7 +11,6 @@ import {
     TableColumn 
 } from "@nextui-org/table"
 import swal from "sweetalert";
-import fs from 'fs';
 
 interface Customer {
     customer_full_name: string;
@@ -32,10 +31,8 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
     const customerIDCARD = customerData[0].id_card_number;
     const employeeId = employee;
 	
-	// State update on page //
-    const [inputAdd, setInputAdd] = useState<string>("");
+    // const [inputAdd, setInputAdd] = useState<string>("");
     const [isVerify, setIsVerify] = useState(false);
-    // End state update on page //
 	
 	const url = `https://rtcapp.mybynt.com/nt_verifyUploadFile/form_upload_file.php?id_card=${customerIDCARD}`
     const [infoData, setInfoData] = useState({
@@ -120,24 +117,24 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
         setMsisdnTable(newRowsData);
     };
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-		if (event.target.value !== "") {
-        setInputAdd(event.target.value);
-		}
-    };
+    // const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+	// 	if (event.target.value !== "") {
+    //     setInputAdd(event.target.value);
+	// 	}
+    // };
 
-    const handleAddRow = () => {
-        setMsisdnTable(prevData => [...prevData, {id_card:customerIDCARD ,msisdn:inputAdd, type_select:'other'}]);
-    };
+    // const handleAddRow = () => {
+    //     setMsisdnTable(prevData => [...prevData, {id_card:customerIDCARD ,msisdn:inputAdd, type_select:'other'}]);
+    // };
 
-    const handleDeleteRow = (msisdnToDelete: string) => {
-        setMsisdnTable(prevData => prevData.map((row) => {
-            if (row.msisdn === msisdnToDelete) {
-              return {...row, type_select: "delete"};
-            }
-            return row;
-          }));
-    };
+    // const handleDeleteRow = (msisdnToDelete: string) => {
+    //     setMsisdnTable(prevData => prevData.map((row) => {
+    //         if (row.msisdn === msisdnToDelete) {
+    //           return {...row, type_select: "delete"};
+    //         }
+    //         return row;
+    //       }));
+    // };
 
     const handleVerify = async () => {
         await fetch('/api/db-query/verify', {
@@ -196,10 +193,6 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                 console.error('Error:', error)
             });
         await handleCheckFile();
-        const time = new Date();
-        const formattedTime = time.toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
-        const log = `${formattedTime}|${customerIDCARD}|EMPLOYEE|${employeeId}\n`
-        fs.appendFile('./log/print.log', log, () => {});
     };
 	
     return (
@@ -233,6 +226,11 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                                 <Input className="mr-2 mb-2" value={infoData?.address_7} id="address_7" label="ตำบล/แขวง" isRequired onChange={handleFormInputChange}/>
                                 <Input className="mr-2 mb-2" value={infoData?.address_8} id="address_8" label="รหัสไปรษณีย์" isRequired onChange={handleFormInputChange}/>
                             </div>
+                            <div className="text-sm text-red-500 w-full flex">
+                                <div>
+                                    <p>***กรอกที่อยู่ตามบัตรประชาชน</p>
+                                </div>
+                            </div>
                         </form>
                 </div>
                 <div className="flex flex-row w-full">
@@ -250,7 +248,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                                             เบอร์โทรศัพท์ในระบบทั้งหมด {msisdnTable.filter(row => row.type_select === "owner" || row.type_select === "not_owned").length} เลขหมาย (กรุณาเลือกเบอร์ที่ถือครอง)
                                         </div>
                                         <div>
-                                            <Checkbox className="" size="sm" onChange={handleCheckAll}>เลือกทั้งหมด</Checkbox>
+                                            <Checkbox className="" size="sm" onChange={handleCheckAll} isSelected={msisdnTable.every(row => row.type_select === 'owner')}>เลือกทั้งหมด</Checkbox>
                                         </div>
                                     </div>
                                 </TableColumn>
@@ -270,7 +268,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                         </Table>
                     </div>
                     <div className="print:hidden w-full mb-5 flex flex-col">
-                        <div className="w-full">
+                        {/* <div className="w-full">
                             <table 
                                     className="font-nt text-black w-full"
                                     color="primary"
@@ -306,7 +304,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                                 </tbody>
                             </table>
                         </div>
-                        <div className="text-red-500 print:hidden">*** กรณีสำหรับเบอร์ที่ถือครองอื่นๆ กรุณานำ SIM CARD ตัวจริงมายืนยันตัวตนที่ศูนย์บริการ NT</div>
+                        <div className="text-red-500 print:hidden">*** ผู้ใช้บริการต้องนำ Sim Card ตัวจริงของเลขหมายที่ถือครองอื่นๆมายืนยันตัวตนที่ศูนย์บริการ NT</div> */}
                         <div className="print:hidden">
                             <Iframe className='w-full print:hidden' 
                             width="200px" 
@@ -325,7 +323,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                     </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-5">
+                {/* <div className="grid grid-cols-2 gap-5">
                     <div className="print:hidden">
                         <Table 
                                 className="font-nt text-black w-auto"
@@ -374,7 +372,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                                 </TableBody>
                         </Table>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="flex flex-col row-start-1 text-xl col-span-full p-5 text-center w-full mt-10 print-only">
                     <div className="fixed top-0 right-0">
