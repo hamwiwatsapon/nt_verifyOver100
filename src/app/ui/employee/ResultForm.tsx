@@ -174,7 +174,6 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
         
     }
     const handlePrint = async () => {
-        window.print();
         await fetch('/api/db-query/employeeInsert', {
             method: 'POST',
             body: JSON.stringify({ customerData: infoData, msisdnData: msisdnTable, ref_employee: employeeId }),
@@ -193,6 +192,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                 console.error('Error:', error)
             });
         await handleCheckFile();
+        window.print();
     };
 	
     return (

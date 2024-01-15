@@ -141,7 +141,6 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
     // };
 
     const handlePrint = async () => {
-        window.print();
         await fetch('/api/db-query/customerInsert', {
             method: 'POST',
             body: JSON.stringify({ customerData: infoData, msisdnData: msisdnTable }),
@@ -160,7 +159,7 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
                 swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
                 console.error('Error:', error)
             });
-        swal("บันทึกข้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลเพื่อความถูกต้อง", "success")
+        window.print();
     };
 	
     return (
