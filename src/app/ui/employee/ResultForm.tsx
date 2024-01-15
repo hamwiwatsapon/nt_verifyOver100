@@ -11,7 +11,7 @@ import {
     TableColumn 
 } from "@nextui-org/table"
 import swal from "sweetalert";
-
+import fs from 'fs';
 
 interface Customer {
     customer_full_name: string;
@@ -196,6 +196,10 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                 console.error('Error:', error)
             });
         await handleCheckFile();
+        const time = new Date();
+        const formattedTime = time.toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
+        const log = `${formattedTime}|${customerIDCARD}|EMPLOYEE|${employeeId}\n`
+        fs.appendFile('./log/print.log', log, () => {});
     };
 	
     return (

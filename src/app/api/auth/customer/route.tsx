@@ -60,7 +60,7 @@ export async function POST(req:Request) {
       const res = await axios.post(url, body,{headers: {"Content-Type": "text/xml; charset: utf-8"}})
       if (res.status === 200) {
         fs.appendFile('./log/login.log', log, () => {});
-        console.log(OTP)
+        // console.log(OTP)
         return NextResponse.json({ status: 200, otpData: OTP, customerData: resData});
       } 
       return NextResponse.json({ status: 401 });

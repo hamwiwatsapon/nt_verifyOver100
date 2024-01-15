@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent, useEffect, SetStateAction } from "react";
 import { Checkbox, Button, Input, Image } from "@nextui-org/react";
-import Iframe from 'react-iframe'
 import { 
     Table, 
     TableHeader, 
@@ -11,7 +10,7 @@ import {
     TableColumn 
 } from "@nextui-org/table"
 import swal from "sweetalert";
-import { useRouter } from 'next/router';
+import fs from 'fs';
 
 
 interface Customer {
@@ -157,6 +156,10 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
             .then(data => console.log(data))
             .catch((error) => console.error('Error:', error));
         swal("บันทึกข้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลเพื่อความถูกต้อง", "success")
+        const time = new Date();
+        const formattedTime = time.toLocaleString().replace(/T/, ' ').replace(/\..+/, '');
+        const log = `${formattedTime}|${customerIDCARD}|CUSTOMER|\n`
+        fs.appendFile('./log/print.log', log, () => {});
     };
 	
     return (

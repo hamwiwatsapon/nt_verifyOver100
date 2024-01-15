@@ -65,7 +65,7 @@ export async function POST(req:Request) {
         if (res.status === 200) {
           const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|SUCCESS\n`
           fs.appendFile('./log/login.log', log, () => {});
-          console.log(OTP)
+          // console.log(OTP)
           return NextResponse.json({ status: 200, otpData: OTP, customerData: res2Data});
         } 
         const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|INVALID\n`
