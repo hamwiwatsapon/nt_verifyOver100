@@ -1,0 +1,63 @@
+@charset "utf-8";
+@font-face {
+font-family: 'thai sans Lite';
+src:url(THAISANSLITE_R1.TTF);
+}
+@font-face{
+font-family: 'TH Sarabun';
+src:url(THSarabun.ttf);	
+}
+
+.text {
+	font-family: "TH Sarabun";
+	font-size: 20px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	color: #000;
+}
+
+.text_b {
+	font-family: "TH Sarabun";
+	font-size: 20px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	color: #000;
+}
+
+.text_white {
+	font-family: "thai sans Lite";
+	font-size: 20px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	color: #FFF;
+}
+
+.text_white_b {
+	font-family: "thai sans Lite";
+	font-size: 20px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	color: #FFF;
+}
+
+.h_text {
+	font-family: "thai sans Lite";
+	font-size: 30px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	color: #000;
+}
+
+.h_text_white {
+	font-family: "thai sans Lite";
+	font-size: 30px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	color: #FFF;
+}

@@ -391,7 +391,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                     </div>
                     <div>
                         <p className="indent-20 text-left">
-                            ข้าพเจ้า{infoData?.fname} {infoData?.lname}  ขอยืนยันการถือครองเลขหมายโทรศัพท์เคลื่อนที่ ขอยืนยันการถือครองเลขหมายโทรศัพท์เคลื่อนที่ จำนวน {msisdnTable.filter(row => row.type_select === "owner" || row.type_select === "other").length} เลขหมายและขอยืนยันความรับผิดชอบต่อการใช้งานเลขหมายที่ถือครองทุกเลขหมาย 
+                            ข้าพเจ้า{infoData?.fname} {infoData?.lname}  ขอยืนยันการถือครองเลขหมายโทรศัพท์เคลื่อนที่ ขอยืนยันการถือครองเลขหมายโทรศัพท์เคลื่อนที่ จำนวน {msisdnTable.filter(row => row.type_select === "owner").length} เลขหมายและขอยืนยันความรับผิดชอบต่อการใช้งานเลขหมายที่ถือครองทุกเลขหมาย 
                         </p>
                     </div>
                     <div className="text-center flex justify-end mt-10 mr-20">
@@ -415,7 +415,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                             <div className="mr-5" key={row.msisdn}>{row.msisdn}</div>
                         ))}
                     </div>
-                    { msisdnTable.filter(row => row.type_select === "other").length > 0 && 
+                    {/* { msisdnTable.filter(row => row.type_select === "other").length > 0 && 
                         <>
                             <h1 className="mt-10 mb-2">เบอร์ที่ถือครองอื่นๆ</h1>
                             <div className="grid grid-cols-5">
@@ -426,7 +426,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                                 ))}
                             </div>
                         </>
-                    }
+                    } */}
                     <p className="print:text-sm">
                         <br />
                         <br />
