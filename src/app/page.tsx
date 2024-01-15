@@ -108,17 +108,17 @@ const Customer = () => {
   return (
   <NextUIProvider>
       {isVerify 
-        ? <main className="flex min-h-screen min-w-screen bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
+        ? <main className="flex min-h-screen min-w-screen bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500 sm:text-sm">
           <ResultForm data={customerData}/>
           </main>
         : (
-          <main className="flex min-h-screen min-w-screen flex-col items-center justify-center p-24 bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
-          <div className="z-10 max-w-10xl w-full items-center justify-between font-nt text-sm lg:flex flex-col">
+          <main className="sm:text-sm flex h-screen w-screen flex-col items-center justify-center p-5 bg-gradient-to-tr from-yellow-100 via-yellow-400 to-yellow-500">
+          <div className="z-10 max-w-10xl w-full items-center justify-between font-nt lg:flex flex-col">
             <NTlogo />
-            <h1 className="mb-10 text-3xl font-extrabold text-gray-900 md:text-4xl lg:text-5xl">
+            <h1 className="mb-10 text-center text-md font-extrabold text-gray-900 md:text-4xl lg:text-5xl">
               ระบบตรวจสอบการถือครองหมายเลขโทรศัพท์
             </h1>
-            <div className="min-w-screen">
+            <div className="min-w-screen sm:text-sm md:text-md lg:text-3xl">
               {isGenOtp
                 ? otpData && <OTPForm genRef={otpData.reference} handleInputChange={handleInputOtp} handleSubmit={handleSubmitOTP}/>
                 : <VerifyForm updateID={updateID} updateMsisdn={updateMsisdn} handleSubmit={handleSubmitVer}/>

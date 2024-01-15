@@ -164,47 +164,46 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
     };
 	
     return (
-            <div className="w-full bg-white p-5 w-a4 h-a4 print:text-sm justify-center items-center shadow-md border-black">
-                <div className="mb-2 w-full justify-between items-center flex flex-row">
-                    <div className="text-red-500 text-xl print:hidden m-5 bottom-0">
-                        <p>
+            <div className="w-full bg-white print:text-sm justify-center items-center shadow-md border-black">
+                <div className="m-5 justify-between items-center md:flex lg:flex sm:flex-col md:flex-row lg:flex-row">
+                    <div className="text-red-500 md:text-xl sm:text-sm print:hidden w-fit">
                             *** นำเอกสาร พร้อมบัตรประชาชนตัวจริง ยืนยันตัวตนได้ที่ศูนย์บริการ NT ใกล้บ้าน 
                         สามารถค้นหาได้ที่ <a className="text-blue-500" href="https://www.ntplc.co.th/servicecenter" target="_blank">https://www.ntplc.co.th/servicecenter</a>
-                        </p>
                     </div>
                     <div>
-                        <Button className="print:hidden text-1xl" onPress={handlePrint} color="warning">พิมพ์เอกสาร และบันทึกข้อมูล</Button>
+                        <Button className="print:hidden text-1xl sm:text-sm self-end" onPress={handlePrint} color="warning" fullWidth>พิมพ์เอกสาร และบันทึกข้อมูล</Button>
                     </div>
                 </div>
-
-                <div className="w-full bg-white text-black text-xl text-center rounded-md justify-center flex flex-row print:hidden">
-                        <form id="information" className="p-0 m-0 w-full mb-5">
-                            <div className="flex flex-row">
-                                <Input className="mr-2 mb-2" value={infoData?.fname} id="fname" label="ชื่อ" isRequired onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.lname} id="lname" label="นามสกุล" isRequired onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.id_card} id="lname" label="หมายเลขบัตรประชาชน" isRequired isReadOnly onChange={handleFormInputChange}/>
+                <div className="bg-white text-black md:text-xl sm:text-sm rounded-md justify-center flex flex-row print:hidden sm:flex-col sm:flex m-5">
+                        <form id="information" className="w-full print:hidden">
+                            <div className="md:flex lg:flex lg:flex-row md:flex-row sm:flex-col gap-2 mb-2">
+                                <Input className="mb-2" size="sm" value={infoData?.fname} id="fname" label="ชื่อ" isRequired onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.lname} id="lname" label="นามสกุล" isRequired onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.id_card} id="lname" label="หมายเลขบัตรประชาชน" isRequired isReadOnly onChange={handleFormInputChange}/>
                             </div>
-                            <div className="flex flex-row">
-                                <Input className="mr-2 mb-2" value={infoData?.address_1} id="address_1" label="บ้านเลขที่" isRequired onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.address_2} id="address_2" label="อาคาร/หมู่บ้าน" onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.address_3} id="address_3" label="ซอย" onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.address_4} id="address_4" label="ถนน" onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.address_5} id="address_5" label="จังหวัด" isRequired onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.address_6} id="address_6" label="อำเภอ/เขต" isRequired onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.address_7} id="address_7" label="ตำบล/แขวง" isRequired onChange={handleFormInputChange}/>
-                                <Input className="mr-2 mb-2" value={infoData?.address_8} id="address_8" label="รหัสไปรษณีย์" isRequired onChange={handleFormInputChange}/>
-                            </div>
-                            <div className="text-sm text-red-500 w-full flex">
-                                <div>
+                            <div className="text-sm text-red-500">
                                     <p>***กรอกที่อยู่ตามบัตรประชาชน</p>
-                                </div>
                             </div>
+                            <div className="md:flex lg:flex lg:flex-row md:flex-row sm:flex-col gap-2">
+                                <Input className="mb-2" size="sm" value={infoData?.address_1} id="address_1" label="บ้านเลขที่" isRequired onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.address_2} id="address_2" label="อาคาร/หมู่บ้าน" onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.address_3} id="address_3" label="ซอย" onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.address_4} id="address_4" label="ถนน" onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.address_5} id="address_5" label="จังหวัด" isRequired onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.address_6} id="address_6" label="อำเภอ/เขต" isRequired onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.address_7} id="address_7" label="ตำบล/แขวง" isRequired onChange={handleFormInputChange}/>
+                                <Input className="mb-2" size="sm" value={infoData?.address_8} id="address_8" label="รหัสไปรษณีย์" isRequired onChange={handleFormInputChange}/>
+                            </div>
+                            
                         </form>
                 </div>
-                <div className="flex flex-row w-full h-fit">
-                    <div className="w-full print:hidden justify-center mb-5 mr-5">
+                <div className="w-full">
+                    <div className="print:hidden m-5">
+                        <div className="text-sm text-red-500">
+                            <p>***เลือกเบอร์ที่ถือครองทั้งหมด</p>
+                        </div>
                         <Table 
-                            className="font-nt text-black w-auto"
+                            className="font-nt text-black"
                             color="primary"
                             aria-label="msisdn in system"
                             id="list_data"
@@ -213,7 +212,7 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
                                 <TableColumn>
                                     <div className="justify-between flex flex-row">
                                         <div>
-                                        เบอร์โทรศัพท์ในระบบทั้งหมด {msisdnTable.filter(row => row.type_select === "owner" || row.type_select === "not_owned").length} เลขหมาย (กรุณาเลือกเบอร์ที่ถือครอง)
+                                        เบอร์โทรศัพท์ในระบบทั้งหมด {msisdnTable.filter(row => row.type_select === "owner" || row.type_select === "not_owned").length} เลขหมาย
                                         </div>
                                         <div>
                                             <Checkbox size="sm" onChange={handleCheckAll} isSelected={msisdnTable.every(row => row.type_select === 'owner')}>เลือกทั้งหมด</Checkbox>
@@ -328,7 +327,7 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
                         <Image 
                         className='print-only'
                         src="/NT-logo.png"
-                        width={150}
+                        width={200}
                         height={100} 
                         alt="NT logo" 
                         />

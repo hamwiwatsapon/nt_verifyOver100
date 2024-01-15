@@ -48,7 +48,7 @@ export async function POST(req:Request) {
           '${customerData?.address_7}', 
           '${customerData?.address_8}', 
           'EMPLOYEE_APPROVE',
-          '${customerData?.employeeId}'
+          '${ref_employee}'
         )`
         await db.execute(insert)
         for (let row of msisdnData) {
@@ -73,7 +73,7 @@ export async function POST(req:Request) {
           address_7='${customerData?.address_7}', 
           address_8='${customerData?.address_8}',
           verify_status='EMPLOYEE_APRROVE',
-          ref_employee='${customerData?.employeeId}'
+          ref_employee='${ref_employee}'
         WHERE id_card = '${customerData?.id_card}'`
         await db.execute(update)
 
