@@ -169,6 +169,8 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
             .then(data => {
                 if (data.status === 200) {
                     setIsVerify(true)
+                } else {
+                    setIsVerify(false)
                 }
             })
             .catch((error) => console.error('Error:', error));
