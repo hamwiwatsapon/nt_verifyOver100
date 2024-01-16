@@ -61,16 +61,16 @@ export async function POST(req:Request) {
             </smssoap>
             </soap:Body>
         </soap:Envelope>`
-        const res = await axios.post(url, body,{headers: {"Content-Type": "text/xml; charset: utf-8"}})
-        if (res.status === 200) {
+        // const res = await axios.post(url, body,{headers: {"Content-Type": "text/xml; charset: utf-8"}})
+        // if (res.status === 200) {
           const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|SUCCESS\n`
           fs.appendFile('./log/login.log', log, () => {});
-          // console.log(OTP)
+          console.log(OTP)
           return NextResponse.json({ status: 200, otpData: OTP, customerData: res2Data});
-        } 
-        const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|INVALID\n`
-        fs.appendFile('./log/login.log', log, () => {});
-        return NextResponse.json({ status: 401 });
+        // } 
+        // const log = `${formattedTime}|${EmployeeId}|EMPLOYEE|${msisdn}|INVALID\n`
+        // fs.appendFile('./log/login.log', log, () => {});
+        // return NextResponse.json({ status: 401 });
       }
   } catch (err) {
     const time = new Date();

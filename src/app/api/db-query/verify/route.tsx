@@ -4,8 +4,10 @@ import { NextResponse } from "next/server";
 export async function POST(req:Request) {
   const data = await req.json();
   const customerData = data?.customerData;
-  const msisdnData = data?.msisdnData;
   const ref_employee = data?.ref_employee
+  const rawMsisdnData = data?.msisdnData;
+  const cleanData = new Set(rawMsisdnData);
+  const msisdnData = [...cleanData]
   try {
     const db = await mysql2.createConnection({
       host: process.env.MYSQL_HOST,

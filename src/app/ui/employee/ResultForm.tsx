@@ -173,7 +173,14 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
             .catch((error) => console.error('Error:', error));
         
     }
+
+    const sleep = (ms:number) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     const handlePrint = async () => {
+        window.print();
+        await sleep(5000);
         await fetch('/api/db-query/employeeInsert', {
             method: 'POST',
             body: JSON.stringify({ customerData: infoData, msisdnData: msisdnTable, ref_employee: employeeId }),
@@ -190,11 +197,31 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
             .catch((error) => {
                 swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
                 console.error('Error:', error)
-            });
+            })
         await handleCheckFile();
-        window.print();
     };
 	
+    const handleSave = async () => {
+        await fetch('/api/db-query/employeeInsert', {
+            method: 'POST',
+            body: JSON.stringify({ customerData: infoData, msisdnData: msisdnTable, ref_employee: employeeId }),
+            
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 200) {
+                    swal("บันทึกช้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลอีกครั้ง", "success")
+                } else {
+                    swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
+                }
+            })
+            .catch((error) => {
+                swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
+                console.error('Error:', error)
+            })
+        await handleCheckFile();
+    }
+
     return (
             <div className="w-full bg-white print:text-sm justify-center items-center shadow-md border-black">
                 <div className="m-5 justify-between items-center md:flex lg:flex sm:flex-col md:flex-row lg:flex-row">
@@ -214,7 +241,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                                 <Input className="mb-2" size="sm" value={infoData?.id_card} id="lname" label="หมายเลขบัตรประชาชน" isRequired isReadOnly onChange={handleFormInputChange}/>
                             </div>
                             <div className="text-sm text-red-500">
-                                    <p>***กรอกที่อยู่ตามบัตรประชาชน</p>
+                                    <p>*** กรอกที่อยู่ตามบัตรประชาชน</p>
                             </div>
                             <div className="md:flex lg:flex lg:flex-row md:flex-row sm:flex-col gap-2">
                                 <Input className="mb-2" size="sm" value={infoData?.address_1} id="address_1" label="บ้านเลขที่" isRequired onChange={handleFormInputChange}/>
@@ -231,7 +258,7 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                 <div className="w-full grid lg:grid-cols-2 md:grid-cols-2">
                     <div className="print:hidden m-5">
                         <div className="text-sm text-red-500">
-                            <p>***เลือกเบอร์ที่ถือครองทั้งหมด</p>
+                            <p>*** เลือกเบอร์ที่ถือครองทั้งหมด</p>
                         </div>
                         <Table 
                             className="font-nt text-black"
@@ -316,7 +343,11 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                             frameBorder={0}
                             />
                         </div>
-                        <div className="print:hidden">
+                        <p className="text-red-500">*** บันทึกช้อมูลก่อนการยืนยันข้อมูล</p>
+                        <div className="print:hidden flex flex-row gap-2">
+                            <Button className="self-end" color="warning" onPress={handleSave}>
+                                บันทึกช้อมูล
+                            </Button>
                             <Button className="self-end" fullWidth color="success" onPress={handleVerify} isDisabled={!isVerify}>
                                 ยืนยันข้อมูลถูกต้อง
                             </Button>
@@ -374,15 +405,6 @@ const ResultForm: React.FC<IProps> = ({ data, employee }) => {
                     </div>
                 </div> */}
                 <div className="flex flex-col row-start-1 text-xl col-span-full p-5 text-center w-full mt-10 print-only">
-                    <div className="fixed top-0 right-0">
-                        <Image 
-                        className='print-only'
-                        src="/NT-logo.png"
-                        width={150}
-                        height={100} 
-                        alt="NT logo" 
-                        />
-                    </div>
                     <div className="text-center">
                         <h3 className="mb-20">
                             หนังสือยืนยันการถือครองเลขหมายโทรศัพท์เคลื่อนที่

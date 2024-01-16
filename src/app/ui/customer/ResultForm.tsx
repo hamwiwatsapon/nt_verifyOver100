@@ -140,17 +140,22 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
     //       }));
     // };
 
+    const sleep = (ms:number) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     const handlePrint = async () => {
+        window.print();
+        await sleep(5000);
         await fetch('/api/db-query/customerInsert', {
             method: 'POST',
             body: JSON.stringify({ customerData: infoData, msisdnData: msisdnTable }),
             
             })
             .then(response => response.json())
-            .then(response => response.json())
             .then(data => {
                 if (data.status === 200) {
                     swal("บันทึกช้อมูลสำเร็จ","กรุณาตรวจสอบข้อมูลอีกครั้ง", "success")
+                    window.print();
                 } else {
                     swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
                 }
@@ -159,7 +164,6 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
                 swal("บันทึกข้อมูลผิดพลาด","กรุณารอการตรวจสอบ", "error")
                 console.error('Error:', error)
             });
-        window.print();
     };
 	
     return (
@@ -322,15 +326,6 @@ const ResultForm: React.FC<IProps> = ({ data }) => {
                     </div>
                 </div> */}
                 <div className="flex flex-col row-start-1 text-xl col-span-full p-5 text-center w-full mt-10 print-only">
-                    <div className="fixed top-0 right-0">
-                        <Image 
-                        className='print-only'
-                        src="/NT-logo.png"
-                        width={200}
-                        height={100} 
-                        alt="NT logo" 
-                        />
-                    </div>
                     <div className="text-center">
                         <h3 className="mb-20">
                             หนังสือยืนยันการถือครองเลขหมายโทรศัพท์เคลื่อนที่
