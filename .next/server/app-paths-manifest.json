@@ -1,16 +1,6 @@
 {
-  "/_not-found": "app/_not-found.js",
-  "/api/auth/employee/route": "app/api/auth/employee/route.js",
   "/api/auth/customer/route": "app/api/auth/customer/route.js",
-  "/api/auth/employee/otp/route": "app/api/auth/employee/otp/route.js",
-  "/api/db-query/checkFileUpload/route": "app/api/db-query/checkFileUpload/route.js",
+  "/page": "app/page.js",
   "/api/db-query/customerInsert/route": "app/api/db-query/customerInsert/route.js",
-  "/api/db-query/employeeInsert/route": "app/api/db-query/employeeInsert/route.js",
-  "/api/db-query/customerFetch/route": "app/api/db-query/customerFetch/route.js",
-  "/api/msisdn/route": "app/api/msisdn/route.js",
-  "/api/db-query/verify/route": "app/api/db-query/verify/route.js",
-  "/api/sendSms/route": "app/api/sendSms/route.js",
-  "/employee/page": "app/employee/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/api/db-query/customerFetch/route": "app/api/db-query/customerFetch/route.js"
 }

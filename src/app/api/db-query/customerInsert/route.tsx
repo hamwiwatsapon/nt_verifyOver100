@@ -5,11 +5,14 @@ import fs from 'fs';
 export async function POST(req:Request) {
   const data = await req.json();
   const customerData = data?.customerData;
+
+  interface Row {
+    id_card: string;
+    msisdn: string;
+    type_select: string;
+  }
   const rawMsisdnData = data?.msisdnData;
-  const cleanData = new Set(rawMsisdnData);
-  const msisdnData = [...cleanData]
-  console.log(rawMsisdnData)
-  console.log(msisdnData)
+  const msisdnData: Row[] = rawMsisdnData.filter((item: string, index:number) => rawMsisdnData.indexOf(item) === index);
   try {
     const db = await mysql2.createConnection({
       host: process.env.MYSQL_HOST,
